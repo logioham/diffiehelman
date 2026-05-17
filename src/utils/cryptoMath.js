@@ -1,48 +1,58 @@
-// Быстрое возведение в степень по модулю: (base^exponent) % modulus
-export const powerMod = (baseStr, exponentStr, modulusStr) => {
+// Возведение в степень по модулю (Алгоритм быстрого возведения в степень)
+export const powerMod = (base, exp, mod) => {
+  if (!base || !exp || !mod) return null;
   try {
-    let base = BigInt(baseStr);
-    let exponent = BigInt(exponentStr);
-    let modulus = BigInt(modulusStr);
+    let b = BigInt(base);
+    let e = BigInt(exp);
+    let m = BigInt(mod);
     
-    if (modulus === 1n) return "0";
+    if (m === 0n) return null;
+    if (m === 1n) return "0";
+
     let result = 1n;
-    base = base % modulus;
-    while (exponent > 0n) {
-      if (exponent % 2n === 1n) result = (result * base) % modulus;
-      exponent = exponent / 2n;
-      base = (base * base) % modulus;
+    b = b % m;
+
+    while (e > 0n) {
+      if (e % 2n === 1n) {
+        result = (result * b) % m;
+      }
+      e = e / 2n;
+      b = (b * b) % m;
     }
     return result.toString();
-  } catch (e) {
+  } catch (err) {
     return null;
   }
 };
 
-// Проверка числа на простоту
-export const isPrime = (numStr) => {
-  try {
-    let n = BigInt(numStr);
-    if (n <= 1n) return false;
-    if (n <= 3n) return true;
-    if (n % 2n === 0n || n % 3n === 0n) return false;
-    for (let i = 5n; i * i <= n; i += 6n) {
-      if (n % i === 0n || n % (i + 2n) === 0n) return false;
-    }
-    return true;
-  } catch { return false; }
+// Проверка числа на простоту (Тест простоты)
+export const isPrime = (num) => {
+  const n = parseInt(num);
+  if (isNaN(n) || n <= 1) return false;
+  if (n <= 3) return true;
+  if (n % 2 === 0 || n % 3 === 0) return false;
+  for (let i = 5; i * i <= n; i += 6) {
+    if (n % i === 0 || n % (i + 2) === 0) return false;
+  }
+  return true;
 };
 
-// Поиск ближайшего простого числа (для подсказок пользователю)
-export const getNextPrime = (numStr) => {
-  try {
-    let n = BigInt(numStr) + 1n;
-    while (!isPrime(n.toString())) n++;
-    return n.toString();
-  } catch { return "23"; }
+// Поиск ближайшего простого числа (если пользователь ввел составное)
+export const getNextPrime = (num) => {
+  let n = parseInt(num);
+  if (isNaN(n)) return 23;
+  if (n <= 1) return 2;
+  let prime = n;
+  let found = false;
+  while (!found) {
+    prime++;
+    if (isPrime(prime)) found = true;
+  }
+  return prime;
 };
 
-// Генератор случайного ключа (для кнопки "Сгенерировать")
+// НОВАЯ ФУНКЦИЯ ДЛЯ КНОПКИ КУБИКА 🎲 (Генерация приватного ключа)
 export const generatePrivateKey = () => {
-  return BigInt(Math.floor(Math.random() * 50) + 5).toString();
+  // Генерируем случайное число от 2 до 50
+  return Math.floor(Math.random() * 49) + 2; 
 };
