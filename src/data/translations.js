@@ -1,0 +1,53 @@
+export const translations = {
+  ru: {
+    navTheory: "Научная База", navPrac: "Симулятор", navExam: "Экзамен", title: "Интерактивный Диффи-Хеллман",
+    part2: "2 Участника", part3: "3 Участника", step: "ШАГ", of: "из", prev: "Назад", next: "Далее",
+    hideT: "Скрыть схему", showT: "Показать схему", currentForm: "Текущая формула",
+    alice: "Алиса", bob: "Боб", carol: "Кэрол", openChan: "Открытый канал связи", 
+    prime: "Модуль поля p", gen: "Первообразный корень g",
+    secretKey: "Секретный ключ", pubKey: "Публичный ключ", interKey: "Промежуточный ключ", finalKey: "Финальный секрет (K)",
+    formulaWord: "Формула", substituteWord: "Подстановка", visProcess: "Визуализация процесса",
+    errFill: "Заполните оба поля!", errPrime: "не простое число!", errKey: "Введите ключ для",
+    steps2: ["Настройка сети (P и G)", "Алиса задает секрет", "Боб задает секрет", "Алиса считает публ. ключ", "Боб считает публ. ключ", "Обмен ключами", "Алиса вычисляет финал", "Боб вычисляет финал"],
+    steps3: ["Настройка сети (P и G)", "Алиса задает секрет", "Боб задает секрет", "Кэрол задает секрет", "Алиса считает публ. ключ", "Боб считает публ. ключ", "Кэрол считает публ. ключ", "Обмен 1 (Публ. ключи)", "Алиса считает промежут.", "Боб считает промежут.", "Кэрол считает промежут.", "Обмен 2 (Промежут.)", "Алиса считает финал", "Боб считает финал", "Кэрол считает финал"],
+    calcTitle: "Калькулятор", calcBtn: "Посчитать", showCalc: "Калькулятор", hideCalc: "Скрыть калькулятор",
+    cheatSheet: "Шпаргалка", homeBtn: "На главную",
+    examTitle: "Режим вычислений", examDesc: "Решите алгоритм самостоятельно. Используйте крипто-калькулятор (кнопка слева).",
+    exStart: "Начать вычисления", exCheck: "Проверить ответы", exCorrect: "Верно!", exWrong: "Ошибка в расчетах! Попробуйте еще раз.",
+    exS1: "1. Начальные данные", exS2: "2. Публичные ключи", exS3: "3. Общий секрет (K)", exFinish: "Экзамен сдан!"
+  },
+  en: {
+    navTheory: "Theory Base", navPrac: "Simulator", navExam: "Exam", title: "Interactive Diffie-Hellman",
+    part2: "2 Participants", part3: "3 Participants", step: "STEP", of: "of", prev: "Back", next: "Next",
+    hideT: "Hide Schema", showT: "Show Schema", currentForm: "Current Formula",
+    alice: "Alice", bob: "Bob", carol: "Carol", openChan: "Public Channel", 
+    prime: "Field Modulus p", gen: "Primitive Root g",
+    secretKey: "Secret Key", pubKey: "Public Key", interKey: "Intermediate Key", finalKey: "Final Secret (K)",
+    formulaWord: "Formula", substituteWord: "Substitution", visProcess: "Visualization",
+    errFill: "Fill both fields!", errPrime: "is not a prime!", errKey: "Enter key for",
+    steps2: ["Network Setup (P & G)", "Alice sets secret", "Bob sets secret", "Alice calcs pub key", "Bob calcs pub key", "Key Exchange", "Alice calcs final", "Bob calcs final"],
+    steps3: ["Network Setup (P & G)", "Alice sets secret", "Bob sets secret", "Carol sets secret", "Alice calcs pub key", "Bob calcs pub key", "Carol calcs pub key", "Exchange 1", "Alice calcs inter", "Bob calcs inter", "Carol calcs inter", "Exchange 2", "Alice calcs final", "Bob calcs final", "Carol calcs final"],
+    calcTitle: "Calculator", calcBtn: "Calculate", showCalc: "Calculator", hideCalc: "Hide Calculator",
+    cheatSheet: "Cheat Sheet", homeBtn: "Home",
+    examTitle: "Manual Calculation", examDesc: "Solve the algorithm manually using the calculator in the left menu.",
+    exStart: "Start", exCheck: "Check Answers", exCorrect: "Correct!", exWrong: "Error! Try again.",
+    exS1: "1. Initial Data", exS2: "2. Public Keys", exS3: "3. Shared Secret (K)", exFinish: "Exam Passed!"
+  },
+  kk: {
+    navTheory: "Теория негізі", navPrac: "Симулятор", navExam: "Емтихан", title: "Интерактивті Диффи-Хеллман",
+    part2: "2 Қатысушы", part3: "3 Қатысушы", step: "ҚАДАМ", of: "/", prev: "Артқа", next: "Келесі",
+    hideT: "Сызбаны жасыру", showT: "Сызбаны көрсету", currentForm: "Ағымдағы формула",
+    alice: "Алиса", bob: "Боб", carol: "Кэрол", openChan: "Ашық арна", 
+    prime: "Өріс модулі p", gen: "Алғашқы түбір g",
+    secretKey: "Құпия кілт", pubKey: "Ашық кілт", interKey: "Аралық кілт", finalKey: "Ортақ құпия (K)",
+    formulaWord: "Формула", substituteWord: "Алмастыру", visProcess: "Визуалдау",
+    errFill: "Өрістерді толтырыңыз!", errPrime: "жай сан емес!", errKey: "Кілтті енгізіңіз:",
+    steps2: ["Желіні баптау (P және G)", "Алиса құпиясы", "Боб құпиясы", "Алиса ашық кілті", "Боб ашық кілті", "Алмасу", "Алиса финалы", "Боб финалы"],
+    steps3: ["Желіні баптау (P және G)", "Алиса құпиясы", "Боб құпиясы", "Кэрол құпиясы", "Алиса ашық кілті", "Боб ашық кілті", "Кэрол ашық кілті", "Алмасу 1", "Алиса аралық", "Боб аралық", "Кэрол аралық", "Алмасу 2", "Алиса финалы", "Боб финалы", "Кэрол финалы"],
+    calcTitle: "Калькулятор", calcBtn: "Есептеу", showCalc: "Калькулятор", hideCalc: "Калькуляторды жасыру",
+    cheatSheet: "Шпаргалка", homeBtn: "Басты бетке",
+    examTitle: "Есептеу режимі", examDesc: "Сол жақтағы калькуляторды пайдаланып алгоритмді қолмен шешіңіз.",
+    exStart: "Бастау", exCheck: "Тексеру", exCorrect: "Дұрыс!", exWrong: "Қате! Қайталаңыз.",
+    exS1: "1. Бастапқы деректер", exS2: "2. Ашық кілттер", exS3: "3. Ортақ құпия (K)", exFinish: "Емтихан тапсырылды!"
+  }
+};

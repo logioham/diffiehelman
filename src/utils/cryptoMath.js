@@ -13,9 +13,7 @@ export const powerMod = (base, exp, mod) => {
     b = b % m;
 
     while (e > 0n) {
-      if (e % 2n === 1n) {
-        result = (result * b) % m;
-      }
+      if (e % 2n === 1n) result = (result * b) % m;
       e = e / 2n;
       b = (b * b) % m;
     }
@@ -25,7 +23,7 @@ export const powerMod = (base, exp, mod) => {
   }
 };
 
-// Проверка числа на простоту (Тест простоты)
+// Проверка числа на простоту
 export const isPrime = (num) => {
   const n = parseInt(num);
   if (isNaN(n) || n <= 1) return false;
@@ -37,22 +35,57 @@ export const isPrime = (num) => {
   return true;
 };
 
-// Поиск ближайшего простого числа (если пользователь ввел составное)
 export const getNextPrime = (num) => {
   let n = parseInt(num);
   if (isNaN(n)) return 23;
   if (n <= 1) return 2;
   let prime = n;
   let found = false;
-  while (!found) {
-    prime++;
-    if (isPrime(prime)) found = true;
-  }
+  while (!found) { prime++; if (isPrime(prime)) found = true; }
   return prime;
 };
 
-// НОВАЯ ФУНКЦИЯ ДЛЯ КНОПКИ КУБИКА 🎲 (Генерация приватного ключа)
 export const generatePrivateKey = () => {
-  // Генерируем случайное число от 2 до 50
   return Math.floor(Math.random() * 49) + 2; 
+};
+
+// === НОВАЯ НАУЧНАЯ МАТЕМАТИКА ===
+
+// Поиск простых множителей числа (нужно для поиска корней)
+const getPrimeFactors = (n) => {
+  const factors = new Set();
+  while (n % 2 === 0) { factors.add(2); n /= 2; }
+  for (let i = 3; i <= Math.sqrt(n); i += 2) {
+    while (n % i === 0) { factors.add(i); n /= i; }
+  }
+  if (n > 2) factors.add(n);
+  return Array.from(factors);
+};
+
+// Поиск ПЕРВООБРАЗНЫХ КОРНЕЙ для заданного простого числа P
+// Поиск ПЕРВООБРАЗНЫХ КОРНЕЙ для заданного простого числа P
+export const getPrimitiveRoots = (p) => {
+  const pInt = parseInt(p);
+  if (!isPrime(pInt)) return [];
+  
+  const roots = [];
+  const phi = pInt - 1;
+  const factors = getPrimeFactors(phi);
+
+  // Ищем ВСЕ возможные корни (но ставим защиту от зависания на 5000 элементов)
+  // Для любых учебных чисел (p до 10000) этот алгоритм найдет абсолютно все корни.
+  for (let r = 2; r < pInt; r++) {
+    let isRoot = true;
+    for (let factor of factors) {
+      if (powerMod(r, Math.floor(phi / factor), pInt) === "1") {
+        isRoot = false;
+        break;
+      }
+    }
+    if (isRoot) {
+      roots.push(r);
+      if (roots.length >= 5000) break; // Скрытый предохранитель от краша браузера
+    }
+  }
+  return roots;
 };
