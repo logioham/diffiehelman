@@ -7,54 +7,10 @@ import { NetworkVisualizer } from './components/NetworkVisualizer';
 import { translations } from './data/translations';
 import { TheorySection } from './components/TheorySection';
 import { FloatingCalculator } from './components/FloatingCalculator';
+import { ExamSection } from './components/ExamSection';
 
 // === ЭКЗАМЕН ===
-const ExamSection = ({ isLight, dict }) => {
-  const [p, setP] = useState("23"); const [g, setG] = useState("5");
-  const [a, setA] = useState("6");  const [b, setB] = useState("15");
-  const [ansA, setAnsA] = useState(""); const [ansB, setAnsB] = useState(""); const [ansK, setAnsK] = useState("");
-  const [step, setStep] = useState(1); const [errorMsg, setErrorMsg] = useState("");
 
-  const t = { cardBg: isLight ? 'bg-white border-slate-200 shadow-sm' : 'bg-[#172033]/80 border-indigo-500/20 shadow-lg', text: isLight ? 'text-slate-700' : 'text-slate-300', title: isLight ? 'text-slate-900' : 'text-white', input: isLight ? 'bg-slate-50 border-slate-300 focus:border-indigo-500 text-slate-900' : 'bg-[#0B0F19] border-indigo-500/30 focus:border-cyan-400 text-indigo-200', btn: isLight ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_15px_rgba(79,70,229,0.3)]', success: isLight ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-emerald-950/50 border-emerald-500/30 text-emerald-400' };
-
-  const checkStep2 = () => { if (ansA === powerMod(g, a, p) && ansB === powerMod(g, b, p)) { setStep(3); setErrorMsg(""); } else setErrorMsg(dict.exWrong); };
-  const checkStep3 = () => { const correctB = powerMod(g, b, p); if (ansK === powerMod(correctB, a, p)) { setStep(4); setErrorMsg(""); } else setErrorMsg(dict.exWrong); };
-
-  return (
-     <div className="max-w-4xl mx-auto p-8 font-sans pb-32">
-        <h2 className={`text-4xl font-extrabold mb-4 tracking-tight ${t.title}`}>{dict.examTitle}</h2><p className={`text-lg mb-10 ${t.text}`}>{dict.examDesc}</p>
-        <motion.div className={`p-8 rounded-2xl border mb-8 transition-opacity duration-500 ${t.cardBg} ${step > 1 ? 'opacity-50' : ''}`}>
-           <h3 className={`text-2xl font-bold mb-6 ${t.title}`}>{dict.exS1}</h3>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-             <div><label className={`block text-xs font-bold uppercase mb-2 ${t.text}`}>p</label><input type="number" value={p} onChange={e=>setP(e.target.value)} disabled={step>1} className={`w-full p-3 text-lg font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-             <div><label className={`block text-xs font-bold uppercase mb-2 ${t.text}`}>g</label><input type="number" value={g} onChange={e=>setG(e.target.value)} disabled={step>1} className={`w-full p-3 text-lg font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-             <div><label className={`block text-xs font-bold uppercase mb-2 ${t.text}`}>Секрет (a)</label><input type="number" value={a} onChange={e=>setA(e.target.value)} disabled={step>1} className={`w-full p-3 text-lg font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-             <div><label className={`block text-xs font-bold uppercase mb-2 ${t.text}`}>Секрет (b)</label><input type="number" value={b} onChange={e=>setB(e.target.value)} disabled={step>1} className={`w-full p-3 text-lg font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-           </div>
-           {step === 1 && <button onClick={() => { if(p&&g&&a&&b) setStep(2); else setErrorMsg(dict.errFill); }} className={`px-8 py-3.5 rounded-xl font-bold text-lg ${t.btn}`}>{dict.exStart}</button>}
-        </motion.div>
-        {step >= 2 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`p-8 rounded-2xl border mb-8 ${t.cardBg} ${step > 2 ? 'opacity-50' : ''}`}>
-             <h3 className={`text-2xl font-bold mb-6 ${t.title}`}>{dict.exS2}</h3>
-             <div className="flex flex-col md:flex-row gap-8 mb-8">
-               <div className="flex-1"><p className={`text-base mb-3 font-mono font-bold ${t.text}`}>A = {g}<sup>{a}</sup> mod {p}</p><input type="number" placeholder="Ответ (A)" value={ansA} onChange={e=>setAnsA(e.target.value)} disabled={step>2} className={`w-full p-4 text-xl font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-               <div className="flex-1"><p className={`text-base mb-3 font-mono font-bold ${t.text}`}>B = {g}<sup>{b}</sup> mod {p}</p><input type="number" placeholder="Ответ (B)" value={ansB} onChange={e=>setAnsB(e.target.value)} disabled={step>2} className={`w-full p-4 text-xl font-bold rounded-xl font-mono outline-none border ${t.input}`}/></div>
-             </div>
-             {step === 2 && <button onClick={checkStep2} className={`px-8 py-3.5 rounded-xl font-bold text-lg ${t.btn}`}>{dict.exCheck}</button>}
-          </motion.div>
-        )}
-        {step >= 3 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={`p-8 rounded-2xl border mb-8 ${t.cardBg} ${step > 3 ? 'opacity-50' : ''}`}>
-             <h3 className={`text-2xl font-bold mb-6 ${t.title}`}>{dict.exS3}</h3><p className={`text-base mb-3 font-mono font-bold ${t.text}`}>K = B<sup>{a}</sup> mod {p} <span className="opacity-50 mx-2">или</span> A<sup>{b}</sup> mod {p}</p>
-             <input type="number" placeholder="Финальный секрет (K)" value={ansK} onChange={e=>setAnsK(e.target.value)} disabled={step>3} className={`w-full p-4 text-xl font-bold rounded-xl font-mono outline-none border mb-8 max-w-sm ${t.input}`}/>
-             <br/>{step === 3 && <button onClick={checkStep3} className={`px-8 py-3.5 rounded-xl font-bold text-lg ${t.btn}`}>{dict.exCheck}</button>}
-          </motion.div>
-        )}
-        {errorMsg && <div className="p-5 rounded-xl border bg-rose-500/20 border-rose-500/50 text-rose-500 font-bold text-center text-lg mb-8 animate-pulse">{errorMsg}</div>}
-        {step === 4 && <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className={`p-8 rounded-2xl border text-center font-black text-3xl ${t.success}`}>🎉 {dict.exFinish}</motion.div>}
-     </div>
-  )
-};
 
 // === ПЛАВАЮЩАЯ ШПАРГАЛКА ===
 const FloatingCheatSheet = ({ isLight, dict, lang, setLang, containerRef }) => {
@@ -240,13 +196,18 @@ export default function App() {
       <div className="absolute inset-0 z-0 pointer-events-none" style={{ backgroundImage: `linear-gradient(${t.gridLine} 1px, transparent 1px), linear-gradient(90deg, ${t.gridLine} 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
       
       {/* ПЛАВАЮЩИЕ ПАНЕЛИ СЛЕВА */}
+      {/* ПЛАВАЮЩИЕ ПАНЕЛИ СЛЕВА */}
       <div className="fixed left-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col gap-4">
         <button onClick={() => setIsCalcOpen(!isCalcOpen)} title={isCalcOpen ? d.hideCalc : d.showCalc} className={`w-12 h-24 flex items-center justify-center rounded-r-2xl shadow-[4px_0_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:w-14 active:scale-95 outline-none ${isLight ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-indigo-600/80 backdrop-blur-md text-white border-y border-r border-indigo-400/50 hover:bg-indigo-500/90'}`}>
           <span className="text-2xl drop-shadow-md">🧮</span>
         </button>
-        <button onClick={() => setIsCheatSheetOpen(!isCheatSheetOpen)} title={d.cheatSheet} className={`w-12 h-24 flex items-center justify-center rounded-r-2xl shadow-[4px_0_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:w-14 active:scale-95 outline-none ${isLight ? 'bg-amber-500 text-white hover:bg-amber-600' : 'bg-amber-500/80 backdrop-blur-md text-white border-y border-r border-amber-400/50 hover:bg-amber-400/90'}`}>
-          <span className="text-2xl drop-shadow-md">❓</span>
-        </button>
+        
+        {/* СКРЫВАЕМ ШПАРГАЛКУ ВО ВРЕМЯ ЭКЗАМЕНА */}
+        {activeTab !== 'exam' && (
+          <button onClick={() => setIsCheatSheetOpen(!isCheatSheetOpen)} title={d.cheatSheet} className={`w-12 h-24 flex items-center justify-center rounded-r-2xl shadow-[4px_0_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:w-14 active:scale-95 outline-none ${isLight ? 'bg-amber-500 text-white hover:bg-amber-600' : 'bg-amber-500/80 backdrop-blur-md text-white border-y border-r border-amber-400/50 hover:bg-amber-400/90'}`}>
+            <span className="text-2xl drop-shadow-md">❓</span>
+          </button>
+        )}
       </div>
 
       {/* КНОПКА СБРОСА (НА ГЛАВНУЮ) СЛЕВА СВЕРХУ */}
@@ -256,7 +217,9 @@ export default function App() {
             <motion.button initial={{ opacity: 0, scale: 0.8, x: -20 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={{ opacity: 0, scale: 0.8, x: -20 }} onClick={resetToMain} className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm transition-all duration-500 shadow-sm border ${isLight ? 'bg-rose-50 border-rose-200 text-rose-600 hover:bg-rose-100' : 'bg-rose-950/40 border-rose-500/30 text-rose-400 hover:bg-rose-900/60'}`}>
               🏠 {d.homeBtn}
             </motion.button>
+            
           )}
+          
         </AnimatePresence>
       </div>
 
@@ -276,9 +239,13 @@ export default function App() {
       </div>
 
       <AnimatePresence mode="wait">
+        {/* Вкладка: Теория */}
         {activeTab === 'theory' && <motion.div key="theory" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 pt-24 overflow-y-auto z-10"><TheorySection isLight={isLight} lang={lang} /></motion.div>}
-        {activeTab === 'exam' && <motion.div key="exam" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 pt-24 overflow-y-auto z-10"><ExamSection isLight={isLight} dict={d} /></motion.div>}
+        
+        {/* Вкладка: Экзамен (ВОТ ТА САМАЯ СТРОЧКА С lang={lang}) */}
+        {activeTab === 'exam' && <motion.div key="exam" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 pt-24 overflow-y-auto z-10"><ExamSection isLight={isLight} lang={lang} /></motion.div>}
 
+        {/* Вкладка: Практика (Симулятор) */}
         {activeTab === 'practice' && (
           <motion.div key="practice" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-10 flex flex-col items-center justify-center pt-10">
             
